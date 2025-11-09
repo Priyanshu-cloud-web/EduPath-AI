@@ -1,0 +1,5 @@
+flask
+pymupdf
+openai
+python-dotenv
+requests  # For live job fetching
