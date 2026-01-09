@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - EduPath AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .dashboard { max-width: 1200px; margin: 40px auto; padding: 20px; }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .stat-card { background: white; padding: 24px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); text-align: center; }
+        .stat-value { font-size: 32px; font-weight: 700; color: #1E3A8A; }
+        .stat-label { color: #6B7280; font-size: 14px; }
+        .chart-box { background: white; padding: 24px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 30px; }
+        .activity { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .activity-item { display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid #E5E7EB; }
+        .activity-item:last-child { border-bottom: none; }
+        .activity-icon { width: 36px; height: 36px; background: #10B981; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-weight: bold; }
+        .goal { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .goal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .goal-title { font-weight: 600; color: #1E3A8A; }
+        .status { padding: 4px 10px; border-radius: 20px; font-size: 13px; }
+        .status-inprogress { background: #DBEAFE; color: #1E40AF; }
+        .status-complete { background: #D1FAE5; color: #065F46; }
+        .progress-ring { width: 70px; height: 70px; position: relative; }
+        .progress-ring circle { fill: none; stroke-width: 7; }
+        .progress-ring .bg { stroke: #E5E7EB; }
+        .progress-ring .fg { stroke: #10B981; stroke-linecap: round; transform: rotate(-90deg); transform-origin: 50% 50%; }
+        .progress-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 16px; font-weight: 600; color: #1E3A8A; }
+        .skill-bar { height: 8px; background: #E5E7EB; border-radius: 4px; margin-top: 8px; overflow: hidden; }
+        .skill-fill { height: 100%; background: #3B82F6; border-radius: 4px; width: 0; transition: width 1s ease; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div style="max-width:1200px; margin:auto; display:flex; justify-content:space-between; align-items:center; padding:20px 0;">
+        <h1>EduPath AI</h1>
+        <ul style="display:flex; gap:30px; list-style:none;">
+            <li><a href="/" style="color:white; text-decoration:none;">Home</a></li>
+            <li><a href="/dashboard" style="color:white; text-decoration:none; font-weight:600;">Dashboard</a></li>
+            <li><a href="/history" style="color:white; text-decoration:none;">History</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="dashboard">
+    <h2 style="text-align:center; color:#1E3A8A; margin-bottom:40px; font-size:32px;">Your Progress Dashboard</h2>
+
+    <div class="stats">
+        <div class="stat-card"><div class="stat-value">{{ total_submissions }}</div><div class="stat-label">Total Submissions</div></div>
+        <div class="stat-card"><div class="stat-value">{{ courses|length }}</div><div class="stat-label">Courses Suggested</div></div>
+        <div class="stat-card"><div class="stat-value">{{ careers|length }}</div><div class="stat-label">Career Paths</div></div>
+        <div class="stat-card"><div class="stat-value">{{ jobs|length }}</div><div class="stat-label">Job Matches</div></div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:30px; margin-bottom:40px;">
+        <div class="chart-box">
+            <h3 style="margin-bottom:20px; color:#1E3A8A;">Skill Mastery</h3>
+            <canvas id="skillChart"></canvas>
+        </div>
+        <div class="chart-box">
+            <h3 style="margin-bottom:20px; color:#1E3A8A;">Recent Activity</h3>
+            <div class="activity">
+                {% for a in recent_activities %}
+                <div class="activity-item">
+                    <div class="activity-icon">{{ a.icon }}</div>
+                    <div>
+                        <div style="font-weight:600;">{{ a.title }}</div>
+                        <div style="font-size:12px; color:#9CA3AF;">{{ a.time }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+    <div class="chart-box">
+        <h3 style="margin-bottom:20px; color:#1E3A8A;">Your Goals</h3>
+        {% for g in goals %}
+        <div class="goal">
+            <div class="goal-header">
+                <div class="goal-title">{{ g.title }}</div>
+                <span class="status {{ g.status_class }}">{{ g.status }}</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:20px;">
+                <div class="progress-ring">
+                    <svg width="70" height="70">
+                        <circle class="bg" cx="35" cy="35" r="30"></circle>
+                        <circle class="fg" cx="35" cy="35" r="30" stroke-dasharray="188.4" stroke-dashoffset="{{ 188.4 * (1 - g.progress/100) }}"></circle>
+                    </svg>
+                    <div class="progress-text">{{ g.progress }}%</div>
+                </div>
+                <div>
+                    <div style="font-size:14px; color:#6B7280;">{{ g.description }}</div>
+                    <div style="font-size:13px; color:#9CA3AF; margin-top:4px;">Due: {{ g.due }}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="chart-box">
+        <h3 style="margin-bottom:20px; color:#1E3A8A;">Skill Breakdown</h3>
+        {% for s in skill_breakdown %}
+        <div style="margin-bottom:16px;">
+            <div style="display:flex; justify-content:space-between;">
+                <span style="font-weight:600;">{{ s.name }}</span>
+                <span style="color:#6B7280;">{{ s.level }}%</span>
+            </div>
+            <div class="skill-bar"><div class="skill-fill" data-level="{{ s.level }}"></div></div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const labels = JSON.parse('{{ skill_labels|tojson|safe }}');
+        const data = JSON.parse('{{ skill_data|tojson|safe }}');
+        if (labels.length > 0) {
+            new Chart(document.getElementById('skillChart'), {
+                type: 'doughnut',
+                data: { labels, datasets: [{ data, backgroundColor: ['#3B82F6','#10B981','#F59E0B','#EF4444','#8B5CF6'], borderWidth: 0, cutout: '70%' }] },
+                options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+            });
+        }
+
+        document.querySelectorAll('.skill-fill').forEach(bar => {
+            setTimeout(() => {
+                const level = bar.dataset.level;
+                if (level !== undefined && level !== '') {
+                    bar.style.width = level + '%';
+                } else {
+                    // fallback: try to read the adjacent label text like "85%"
+                    const labelText = bar.parentElement.previousElementSibling.querySelector('span:last-child')?.textContent || '0%';
+                    const num = labelText.replace('%', '').trim();
+                    bar.style.width = num + '%';
+                }
+            }, 300);
+        });
+    });
+</script>
+
+</body>
+</html>

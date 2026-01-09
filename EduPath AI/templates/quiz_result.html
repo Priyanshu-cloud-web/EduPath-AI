@@ -1,0 +1,273 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skill Gap Results - EduPath AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body { background: var(--light); font-family: 'Poppins', sans-serif; }
+    .result-container {
+      max-width: 900px;
+      margin: 60px auto;
+      padding: 40px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+    .result-container h2 {
+      color: var(--primary);
+      margin-bottom: 30px;
+    }
+    .result-card {
+      background: #f0f9ff;
+      border-left: 6px solid var(--secondary);
+      padding: 30px;
+      margin: 30px 0;
+      border-radius: 12px;
+      text-align: left;
+    }
+    .result-card.strength {
+      background: #f0fdf4;
+      border-left-color: var(--success);
+    }
+    .result-card h3 {
+      color: var(--primary);
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+    .result-card p {
+      white-space: pre-line;
+      font-size: 17px;
+      line-height: 1.8;
+      color: #374151;
+    }
+    .empty-message {
+      color: #6b7280;
+      font-style: italic;
+      padding: 20px;
+      background: #f3f4f6;
+      border-radius: 12px;
+    }
+    .btn-again {
+      background: var(--secondary);
+      color: white;
+      padding: 14px 40px;
+      border: none;
+      border-radius: 12px;
+      font-size: 17px;
+      margin: 20px 10px;
+    }
+  </style>
+</head>
+<body> -->
+  <!-- Simple Navbar -->
+  <!-- <nav>
+    <div class="container">
+      <h1>EduPath AI</h1>
+      <ul>
+        <li><a href="{{ url_for('index') }}">Home</a></li>
+        <li><a href="{{ url_for('skill_quiz') }}">Skill Quiz</a></li>
+        <li><a href="/logout" style="color: #fecaca">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="result-container">
+    <h2>Your Skill Gap Analysis</h2> -->
+
+    <!-- Strengths -->
+    <!-- <div class="result-card strength">
+      <h3><i class="fas fa-trophy me-2"></i> Your Strengths</h3>
+      {% if strong_text and strong_text.strip() and "Keep building" not in strong_text %}
+      <p>{{ strong_text }}</p>
+      {% else %}
+      <p class="empty-message">
+        No strong skills detected (all rated intermediate).<br>
+        You're well-balanced — keep growing evenly!
+      </p>
+      {% endif %}
+    </div> -->
+
+    <!-- Gaps -->
+    <!-- <div class="result-card">
+      <h3><i class="fas fa-tools me-2"></i> Skill Gaps & How to Improve</h3>
+      {% if gaps_text and gaps_text.strip() and "No major" not in gaps_text %}
+      <p>{{ gaps_text }}</p>
+      {% else %}
+      <p class="empty-message">
+        No major skill gaps detected — great job!<br>
+        You're on a strong path. Focus on advanced projects to level up.
+      </p>
+      {% endif %}
+    </div> -->
+
+    <!-- Raw Scores (Debug) -->
+    <!-- <details class="mt-4">
+      <summary>View Your Raw Ratings</summary>
+      <ul class="text-left mt-3">
+        {% for skill, score in scores.items() %}
+        <li><strong>{{ skill }}:</strong> 
+          {% if score == 1 %} Beginner
+          {% elif score == 3 %} Intermediate
+          {% elif score == 5 %} Advanced
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </details>
+
+    <div class="mt-5">
+      <a href="{{ url_for('skill_quiz') }}" class="btn-again">
+        <i class="fas fa-redo me-2"></i> Take Quiz Again
+      </a>
+      <a href="{{ url_for('index') }}" class="btn-again" style="background: var(--gray);">
+        ← Back to Home
+      </a>
+    </div>
+  </div>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skill Gap Results - EduPath AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body { background: var(--light); font-family: 'Poppins', sans-serif; }
+    .result-container {
+      max-width: 900px;
+      margin: 60px auto;
+      padding: 40px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+    .result-container h2 {
+      color: var(--primary);
+      margin-bottom: 30px;
+    }
+    .result-card {
+      background: #f0f9ff;
+      border-left: 6px solid var(--secondary);
+      padding: 30px;
+      margin: 30px 0;
+      border-radius: 12px;
+      text-align: left;
+    }
+    .result-card.strength {
+      background: #f0fdf4;
+      border-left-color: var(--success);
+    }
+    .result-card h3 {
+      color: var(--primary);
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+    .result-card p {
+      white-space: pre-line;
+      font-size: 17px;
+      line-height: 1.8;
+      color: #374151;
+    }
+    .empty-message {
+      color: #6b7280;
+      font-style: italic;
+      padding: 20px;
+      background: #f3f4f6;
+      border-radius: 12px;
+    }
+    .btn-again {
+      background: var(--secondary);
+      color: white;
+      padding: 14px 40px;
+      border: none;
+      border-radius: 12px;
+      font-size: 17px;
+      margin: 20px 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Simple Navbar -->
+  <nav>
+    <div class="container">
+      <h1>EduPath AI</h1>
+      <ul>
+        <li><a href="{{ url_for('index') }}">Home</a></li>
+        <li><a href="{{ url_for('skill_quiz') }}">Skill Quiz</a></li>
+        <li><a href="/logout" style="color: #fecaca">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="result-container">
+    <h2>Your Skill Gap Analysis</h2>
+
+    <!-- Strengths -->
+    <div class="result-card strength">
+      <h3><i class="fas fa-trophy me-2"></i> Your Strengths</h3>
+      {% if strong_text and strong_text.strip() %}
+        <p>{{ strong_text }}</p>
+      {% else %}
+        <p class="empty-message">
+          No standout strengths detected yet.<br>
+          Try rating some skills as 4 or 5 to see personalized leverage tips!
+        </p>
+      {% endif %}
+    </div>
+
+    <!-- Gaps -->
+    <div class="result-card">
+      <h3><i class="fas fa-tools me-2"></i> Skill Gaps & How to Improve</h3>
+      {% if gaps_text and gaps_text.strip() %}
+        <p>{{ gaps_text }}</p>
+      {% else %}
+        <p class="empty-message">
+          No major skill gaps — excellent foundation!<br>
+          Keep practicing to reach expert level.
+        </p>
+      {% endif %}
+    </div>
+
+    <!-- Raw Scores -->
+    <details class="mt-5 bg-light p-4 rounded">
+      <summary class="fw-bold text-primary">View Your Ratings</summary>
+      <ul class="text-start mt-3">
+        {% for skill, score in scores.items() %}
+        <li>
+          <strong>{{ skill }}:</strong> 
+          {{ score }}/5 
+          {% if score == 1 %}(Beginner)
+          {% elif score == 2 %}(Novice)
+          {% elif score == 3 %}(Intermediate)
+          {% elif score == 4 %}(Advanced)
+          {% elif score == 5 %}(Expert)
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </details>
+
+    <div class="mt-5">
+      <a href="{{ url_for('skill_quiz') }}" class="btn-again">
+        <i class="fas fa-redo me-2"></i> Take Quiz Again
+      </a>
+      <br>
+      <a href="{{ url_for('index') }}" class="btn-again" style="background: #6b7280;">
+        ← Back to Home
+      </a>
+    </div>
+  </div>
+</body>
+</html>
