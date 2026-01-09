@@ -97,8 +97,8 @@ from openai import OpenAI
 
 load_dotenv()
 
-api_key = os.getenv("sk-123")
-client = OpenAI(api_key="sk-123") if "sk-123" else None
+api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key="OPENAI_API_KEY") if "OPENAI_API_KEY" else None
 
 def ai_call(prompt, tokens=200):
     try:
@@ -696,5 +696,6 @@ def skill_quiz_result():
 # === Run ===
 if __name__ == "__main__":
     os.makedirs("uploads", exist_ok=True)
+
 
     app.run(debug=True, threaded=True)
