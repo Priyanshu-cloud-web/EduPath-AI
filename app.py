@@ -292,13 +292,6 @@ def history():
         flash("History error", "error")
         return redirect(url_for("index"))
 
-
-# Add to imports
-from apify_client import ApifyClient
-
-# In your code (after load_dotenv())
-apify_client = ApifyClient(os.getenv("https://api.apify.com/v2/users/admirable_lunar"))
-
 def fetch_real_linkedin_jobs(keywords, limit=5):
     try:
         run_input = {
@@ -652,5 +645,6 @@ def skill_quiz_result():
 # === Run ===
 if __name__ == "__main__":
     os.makedirs("uploads", exist_ok=True)
+
 
     app.run(debug=True, threaded=True)
