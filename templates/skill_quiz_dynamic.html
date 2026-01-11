@@ -1,0 +1,315 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rate Your Skills - EduPath AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body { 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: 'Poppins', sans-serif;
+      color: #333;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+    .quiz-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      overflow: hidden;
+      position: relative;
+    }
+    .quiz-header {
+      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+      color: white;
+      padding: 40px 40px 20px;
+      text-align: center;
+    }
+    .quiz-header h2 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+    .quiz-header p {
+      opacity: 0.9;
+      font-size: 16px;
+    }
+    .quiz-body {
+      padding: 40px;
+    }
+    .skill-card {
+      background: #f8fafc;
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 24px;
+      border-left: 6px solid var(--secondary);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+    }
+    .skill-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+    }
+    .skill-card h4 {
+      color: var(--primary);
+      margin-bottom: 16px;
+      font-size: 20px;
+    }
+    .rating-scale {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .rating-btn {
+      flex: 1;
+      min-width: 100px;
+      text-align: center;
+      padding: 12px;
+      border-radius: 12px;
+      border: 2px solid #e2e8f0;
+      background: white;
+      font-weight: 600;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    .rating-btn:hover {
+      background: #eff6ff;
+      border-color: var(--secondary);
+    }
+    .rating-btn.selected {
+      background: var(--secondary);
+      color: white;
+      border-color: var(--secondary);
+      transform: scale(1.05);
+    }
+    .submit-btn {
+      background: var(--success);
+      color: white;
+      padding: 16px 50px;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(16,185,129,0.3);
+    }
+    .submit-btn:hover {
+      background: #059669;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(16,185,129,0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <div class="quiz-header">
+      <h2>Rate Your Confidence (1-5)</h2>
+      <p>1 = Beginner &nbsp;&nbsp;|&nbsp;&nbsp; 5 = Expert</p>
+    </div>
+
+    <div class="quiz-body">
+      <form method="POST" action="{{ url_for('skill_quiz_result') }}">
+        {% for q in questions %}
+        <div class="skill-card">
+          <h4>{{ q.question }}</h4>
+          <div class="rating-scale">
+            {% for i in range(1,6) %}
+            <label class="rating-btn" for="{{ q.skill }}_{{ i }}">
+              <input type="radio" name="{{ q.skill }}" value="{{ i }}" id="{{ q.skill }}_{{ i }}" required>
+              {{ i }}
+            </label>
+            {% endfor %}
+          </div>
+        </div>
+        {% endfor %}
+
+        <div class="text-center mt-5">
+          <button type="submit" class="submit-btn">
+            <i class="fas fa-chart-line me-2"></i> Get My Skill Gaps & Strengths
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rate Your Skills - EduPath AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body { 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: 'Poppins', sans-serif;
+      color: #333;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+    .quiz-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      overflow: hidden;
+    }
+    .quiz-header {
+      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+      color: white;
+      padding: 40px 40px 20px;
+      text-align: center;
+    }
+    .quiz-header h2 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+    .quiz-header p {
+      opacity: 0.9;
+      font-size: 16px;
+    }
+    .quiz-body {
+      padding: 40px;
+    }
+    .skill-card {
+      background: #f8fafc;
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 24px;
+      border-left: 6px solid var(--secondary);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+    }
+    .skill-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+    }
+    .skill-card h4 {
+      color: var(--primary);
+      margin-bottom: 20px;
+      font-size: 20px;
+    }
+    .rating-scale {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .rating-option {
+      flex: 1;
+      min-width: 100px;
+      text-align: center;
+    }
+    .rating-btn {
+      display: block;
+      padding: 14px;
+      border-radius: 12px;
+      border: 2px solid #e2e8f0;
+      background: white;
+      font-weight: 600;
+      font-size: 18px;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    .rating-btn:hover {
+      background: #eff6ff;
+      border-color: var(--secondary);
+    }
+    .rating-btn.selected {
+      background: var(--secondary);
+      color: white;
+      border-color: var(--secondary);
+      transform: scale(1.05);
+    }
+    .rating-label {
+      display: block;
+      margin-top: 8px;
+      font-size: 14px;
+      color: #4b5563;
+      font-weight: 500;
+    }
+    .submit-btn {
+      background: var(--success);
+      color: white;
+      padding: 16px 50px;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(16,185,129,0.3);
+      margin-top: 20px;
+    }
+    .submit-btn:hover {
+      background: #059669;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(16,185,129,0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <div class="quiz-header">
+      <h2>Rate Your Confidence</h2>
+      <p>Be honest — this helps AI give you the best advice!</p>
+    </div>
+
+    <div class="quiz-body">
+      <form method="POST" action="{{ url_for('skill_quiz_result') }}">
+        {% for q in questions %}
+        <div class="skill-card">
+          <h4>{{ q.question }}</h4>
+          <div class="rating-scale">
+            {% set labels = ["Beginner", "Novice", "Intermediate", "Advanced", "Expert"] %}
+            {% for i in range(1,6) %}
+            <div class="rating-option">
+              <label>
+                <input type="radio" name="{{ q.skill }}" value="{{ i }}" required class="d-none">
+                <div class="rating-btn">{{ i }}</div>
+                <span class="rating-label">{{ labels[i-1] }}</span>
+              </label>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endfor %}
+
+        <div class="text-center">
+          <button type="submit" class="submit-btn">
+            <i class="fas fa-chart-line me-2"></i> Get My Skill Gaps & Strengths
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Visual feedback when selecting
+    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+      radio.addEventListener('change', function() {
+        // Remove selected from siblings
+        this.closest('.rating-scale').querySelectorAll('.rating-btn').forEach(btn => {
+          btn.classList.remove('selected');
+        });
+        // Add to current
+        this.closest('.rating-option').querySelector('.rating-btn').classList.add('selected');
+      });
+    });
+  </script>
+</body>
+</html>

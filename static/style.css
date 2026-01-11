@@ -1,0 +1,210 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+body { background-color: #F9FAFB; color: #1F2937; }
+
+/* Navbar */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 80px;
+    background-color: #1E3A8A;
+    color: white;
+}
+nav h1 { font-size: 24px; letter-spacing: 1px; }
+nav ul { list-style: none; display: flex; gap: 30px; }
+nav ul li a { color: white; text-decoration: none; font-weight: 500; }
+nav ul li a:hover { color: #10B981; }
+
+/* Hero */
+.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 80vh;
+    padding: 0 20px;
+    align-self: center;
+}
+.hero h2 { font-size: 40px; color: #e8eaef; }
+.hero p { margin: 20px 0; font-size: 18px; color: #101216; max-width: 700px; }
+.hero button {
+    background-color: #3B82F6; color: white; border: none;
+    padding: 12px 24px; font-size: 16px; border-radius: 8px;
+    cursor: pointer; transition: 0.3s;
+}
+.hero button:hover { background-color: #2563EB; }
+
+/* Features */
+.features {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 60px 80px;
+    flex-wrap: wrap;
+    background-color: #FFFFFF;
+}
+.feature-box {
+    background-color: #F3F4F6;
+    border-radius: 12px;
+    padding: 30px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+.feature-box:hover { transform: translateY(-5px); }
+.feature-box h3 { color: #1E3A8A; margin-bottom: 10px; }
+
+.resume {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+        margin-bottom: 50px;
+        border: 1px solid var(--border);
+}
+
+
+.hover-shadow {
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.hover-shadow:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+
+
+/* Footer */
+footer {
+    background-color: #1E3A8A;
+    color: white;
+    text-align: center;
+    padding: 20px ;
+    font-size: 14px;
+}
+
+
+
+
+body.dark-mode {
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+
+/* 
+:root {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-card: rgba(30, 41, 59, 0.6);
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --accent: #60a5fa;
+  --accent-glow: #3b82f6;
+  --success: #10b981;
+  --success-glow: #059669;
+  --border: rgba(148, 163, 184, 0.2);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode {
+  background: linear-gradient(135deg, var(--bg-primary) 0%, #0a0e1a 100%);
+  color: var(--text-primary);
+  transition: all 0.5s ease;
+}
+
+.dark-mode nav {
+  background: rgba(30, 41, 59, 0.7) !important;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+.dark-mode .container,
+.dark-mode .card,
+.dark-mode .form-card,
+.dark-mode .result-card,
+.dark-mode .skill-card,
+.dark-mode .quiz-container,
+.dark-mode .login-container,
+.dark-mode .form-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow);
+  transition: all 0.4s ease;
+}
+
+.dark-mode input,
+.dark-mode textarea,
+.dark-mode .file-upload {
+  background: rgba(51, 65, 85, 0.6);
+  border: 1px solid #475569;
+  color: var(--text-primary);
+  transition: all 0.3s;
+}
+
+.dark-mode input:focus,
+.dark-mode textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.2);
+  background: rgba(51, 65, 85, 0.8);
+}
+
+.dark-mode .btn {
+  background: linear-gradient(135deg, var(--accent), #2563eb);
+  border: none;
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+  transition: all 0.4s ease;
+}
+
+.dark-mode .btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 12px 30px rgba(59, 130, 246, 0.6);
+}
+
+.dark-mode .btn-success {
+  background: linear-gradient(135deg, var(--success), #059669);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+.dark-mode .btn-success:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 12px 30px rgba(16, 185, 129, 0.6);
+}
+
+/* Glow on headings */
+/* .dark-mode h1, .dark-mode h2, .dark-mode h3, .dark-mode h4 {
+  color: white;
+  text-shadow: 0 0 10px rgba(96, 165, 250, 0.5);
+} */
+
+/* Subtle hover on cards */
+/* .dark-mode .card:hover,
+.dark-mode .skill-card:hover,
+.dark-mode .result-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+} */
+
+/* Links */
+/* .dark-mode a {
+  color: var(--accent);
+  transition: all 0.3s;
+}
+
+.dark-mode a:hover {
+  color: #93c5fd;
+  text-shadow: 0 0 8px rgba(96, 165, 250, 0.6);
+} */ 
+
+
+
